@@ -19,7 +19,7 @@ public class PhoneUtilsTest {
 
     @Test
     void invalidExamples() {
-        assertFalse(PhoneUtils.isValidE164("14155552671"));   // no +
+        assertFalse(PhoneUtils.isValidE164("14155552671")); // no +
         assertFalse(PhoneUtils.isValidE164("+12abc345"));
     }
 }
