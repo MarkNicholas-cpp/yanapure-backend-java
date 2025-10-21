@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_USER: yanapure_app
+          POSTGRES_PASSWORD: admin@yanapure
+          POSTGRES_DB: yanapure
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd="pg_isready -U yanapure_app -d yanapure"
+          --health-interval=5s --health-timeout=3s --health-retries=10
+
+    env:
+      DB_HOST: localhost
+      DB_PORT: 5432
+      DB_NAME: yanapure
+      DB_USER: yanapure_app
+      DB_PASSWORD: admin@yanapure
+      SERVER_PORT: 8080
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: maven
+
+      - name: Build & Test
+        run: ./mvnw -B -DskipTests=false verify
+
+      - name: Archive JaCoCo report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-report
+          path: target/site/jacoco

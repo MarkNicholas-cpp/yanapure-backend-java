@@ -5,109 +5,111 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Entity
-@Table(name = "users", indexes = {
-        @Index(name = "idx_users_phone", columnList = "phone"),
-        @Index(name = "idx_users_email", columnList = "email")
-})
+@Table(
+    name = "users",
+    indexes = {
+      @Index(name = "idx_users_phone", columnList = "phone"),
+      @Index(name = "idx_users_email", columnList = "email")
+    })
 public class User {
-    @Id
-    @GeneratedValue
-    private UUID id;
+  @Id @GeneratedValue private UUID id;
 
-    @Column(nullable = false, length = 100)
-    private String name;
-    @Column(nullable = false, unique = true, length = 16)
-    private String phone;
-    @Column(unique = true, length = 255)
-    private String email;
+  @Column(nullable = false, length = 100)
+  private String name;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private Role role = Role.USER;
+  @Column(nullable = false, unique = true, length = 16)
+  private String phone;
 
-    private Instant lastLoginAt;
-    @Column(nullable = false)
-    private Instant createdAt = Instant.now();
-    @Column(nullable = false)
-    private Instant updatedAt = Instant.now();
+  @Column(unique = true, length = 255)
+  private String email;
 
-    public boolean isAdmin() {
-        return role == Role.ADMIN;
-    }
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false, length = 20)
+  private Role role = Role.USER;
 
-    public boolean hasEmail() {
-        return email != null && !email.isBlank();
-    }
+  private Instant lastLoginAt;
 
-    // Getters and Setters
-    public UUID getId() {
-        return id;
-    }
+  @Column(nullable = false)
+  private Instant createdAt = Instant.now();
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
+  @Column(nullable = false)
+  private Instant updatedAt = Instant.now();
 
-    public String getName() {
-        return name;
-    }
+  public boolean isAdmin() {
+    return role == Role.ADMIN;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public boolean hasEmail() {
+    return email != null && !email.isBlank();
+  }
 
-    public String getPhone() {
-        return phone;
-    }
+  // Getters and Setters
+  public UUID getId() {
+    return id;
+  }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+  public void setId(UUID id) {
+    this.id = id;
+  }
 
-    public String getEmail() {
-        return email;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public Role getRole() {
-        return role;
-    }
+  public String getPhone() {
+    return phone;
+  }
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
 
-    public Instant getLastLoginAt() {
-        return lastLoginAt;
-    }
+  public String getEmail() {
+    return email;
+  }
 
-    public void setLastLoginAt(Instant lastLoginAt) {
-        this.lastLoginAt = lastLoginAt;
-    }
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
+  public Role getRole() {
+    return role;
+  }
 
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
+  public void setRole(Role role) {
+    this.role = role;
+  }
 
-    public Instant getUpdatedAt() {
-        return updatedAt;
-    }
+  public Instant getLastLoginAt() {
+    return lastLoginAt;
+  }
 
-    public void setUpdatedAt(Instant updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+  public void setLastLoginAt(Instant lastLoginAt) {
+    this.lastLoginAt = lastLoginAt;
+  }
 
-    /**
-     * Check if user is regular user
-     */
-    public boolean isUser() {
-        return this.role == Role.USER;
-    }
+  public Instant getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(Instant createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public Instant getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(Instant updatedAt) {
+    this.updatedAt = updatedAt;
+  }
+
+  /** Check if user is regular user */
+  public boolean isUser() {
+    return this.role == Role.USER;
+  }
 }

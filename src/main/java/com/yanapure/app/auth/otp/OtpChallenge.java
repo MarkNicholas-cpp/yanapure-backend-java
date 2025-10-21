@@ -5,124 +5,126 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Entity
-@Table(name = "otp_challenges", indexes = {
-        @Index(name = "idx_otp_active", columnList = "phone, consumedAt, expiresAt")
-})
+@Table(
+    name = "otp_challenges",
+    indexes = {@Index(name = "idx_otp_active", columnList = "phone, consumedAt, expiresAt")})
 public class OtpChallenge {
-    @Id
-    @GeneratedValue
-    private UUID id;
+  @Id @GeneratedValue private UUID id;
 
-    @Column(nullable = false, length = 16)
-    private String phone;
-    @Column(nullable = false, length = 100)
-    private String codeHash;
+  @Column(nullable = false, length = 16)
+  private String phone;
 
-    @Column(nullable = false)
-    private Instant expiresAt;
-    private Instant consumedAt;
+  @Column(nullable = false, length = 100)
+  private String codeHash;
 
-    @Column(length = 45)
-    private String requestIp;
-    @Column(nullable = false)
-    private int attemptCount = 0;
-    @Column(nullable = false)
-    private boolean verified = false;
+  @Column(nullable = false)
+  private Instant expiresAt;
 
-    @Column(nullable = false)
-    private Instant createdAt = Instant.now();
+  private Instant consumedAt;
 
-    public boolean isExpired() {
-        return Instant.now().isAfter(expiresAt);
-    }
+  @Column(length = 45)
+  private String requestIp;
 
-    public boolean isConsumed() {
-        return consumedAt != null;
-    }
+  @Column(nullable = false)
+  private int attemptCount = 0;
 
-    public boolean isActive() {
-        return !isExpired() && !isConsumed() && !verified;
-    }
+  @Column(nullable = false)
+  private boolean verified = false;
 
-    public void markConsumed() {
-        this.consumedAt = Instant.now();
-        this.verified = true;
-    }
+  @Column(nullable = false)
+  private Instant createdAt = Instant.now();
 
-    public void incrementAttemptCount() {
-        this.attemptCount++;
-    }
+  public boolean isExpired() {
+    return Instant.now().isAfter(expiresAt);
+  }
 
-    // Getters and Setters
-    public UUID getId() {
-        return id;
-    }
+  public boolean isConsumed() {
+    return consumedAt != null;
+  }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
+  public boolean isActive() {
+    return !isExpired() && !isConsumed() && !verified;
+  }
 
-    public String getPhone() {
-        return phone;
-    }
+  public void markConsumed() {
+    this.consumedAt = Instant.now();
+    this.verified = true;
+  }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+  public void incrementAttemptCount() {
+    this.attemptCount++;
+  }
 
-    public String getCodeHash() {
-        return codeHash;
-    }
+  // Getters and Setters
+  public UUID getId() {
+    return id;
+  }
 
-    public void setCodeHash(String codeHash) {
-        this.codeHash = codeHash;
-    }
+  public void setId(UUID id) {
+    this.id = id;
+  }
 
-    public Instant getExpiresAt() {
-        return expiresAt;
-    }
+  public String getPhone() {
+    return phone;
+  }
 
-    public void setExpiresAt(Instant expiresAt) {
-        this.expiresAt = expiresAt;
-    }
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
 
-    public Instant getConsumedAt() {
-        return consumedAt;
-    }
+  public String getCodeHash() {
+    return codeHash;
+  }
 
-    public void setConsumedAt(Instant consumedAt) {
-        this.consumedAt = consumedAt;
-    }
+  public void setCodeHash(String codeHash) {
+    this.codeHash = codeHash;
+  }
 
-    public String getRequestIp() {
-        return requestIp;
-    }
+  public Instant getExpiresAt() {
+    return expiresAt;
+  }
 
-    public void setRequestIp(String requestIp) {
-        this.requestIp = requestIp;
-    }
+  public void setExpiresAt(Instant expiresAt) {
+    this.expiresAt = expiresAt;
+  }
 
-    public int getAttemptCount() {
-        return attemptCount;
-    }
+  public Instant getConsumedAt() {
+    return consumedAt;
+  }
 
-    public void setAttemptCount(int attemptCount) {
-        this.attemptCount = attemptCount;
-    }
+  public void setConsumedAt(Instant consumedAt) {
+    this.consumedAt = consumedAt;
+  }
 
-    public boolean isVerified() {
-        return verified;
-    }
+  public String getRequestIp() {
+    return requestIp;
+  }
 
-    public void setVerified(boolean verified) {
-        this.verified = verified;
-    }
+  public void setRequestIp(String requestIp) {
+    this.requestIp = requestIp;
+  }
 
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
+  public int getAttemptCount() {
+    return attemptCount;
+  }
 
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
+  public void setAttemptCount(int attemptCount) {
+    this.attemptCount = attemptCount;
+  }
+
+  public boolean isVerified() {
+    return verified;
+  }
+
+  public void setVerified(boolean verified) {
+    this.verified = verified;
+  }
+
+  public Instant getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(Instant createdAt) {
+    this.createdAt = createdAt;
+  }
 }
