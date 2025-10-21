@@ -39,3 +39,34 @@ twilio:
   account-sid: ${TWILIO_ACCOUNT_SID:}
   auth-token: ${TWILIO_AUTH_TOKEN:}
   phone-number: ${TWILIO_PHONE_NUMBER:}
+
+# Application Configuration
+app:
+  cors:
+    origins: ${FRONTEND_URL:http://localhost:5173}
+  
+  # Authentication Configuration
+  auth:
+    access-token-expiry-hours: 1
+    refresh-token-expiry-days: 7
+    max-sessions-per-user: 5
+  
+  # JWT Configuration
+  jwt:
+    secret: ${JWT_SECRET:yanapure-secret-key-change-in-production-very-long-and-secure}
+    access-token-expiry-hours: 1
+    refresh-token-expiry-days: 7
+  
+  # OTP Configuration
+  otp:
+    length: 6
+    expiry-minutes: 5
+    max-attempts: 3
+    rate-limit-minutes: 1
+    max-per-hour: 5
+  
+  # Admin Configuration
+  admin:
+    phone: ${ADMIN_PHONE:+14155550000}
+    name: ${ADMIN_NAME:System Admin}
+    email: ${ADMIN_EMAIL:admin@yanapure.com}

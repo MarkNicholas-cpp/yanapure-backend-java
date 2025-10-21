@@ -103,4 +103,11 @@ public class User {
     public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    /**
+     * Check if user is regular user
+     */
+    public boolean isUser() {
+        return this.role == Role.USER;
+    }
 }

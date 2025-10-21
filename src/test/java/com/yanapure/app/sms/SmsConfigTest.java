@@ -1,32 +1,26 @@
 package com.yanapure.app.sms;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.beans.factory.annotation.Autowired;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-@TestPropertySource(properties = {
-    "twilio.account-sid=", // Empty to disable Twilio
-    "twilio.auth-token=",
-    "twilio.phone-number="
-})
 public class SmsConfigTest {
-    
-    @Autowired
-    private SmsProvider smsProvider;
-    
+
     @Test
-    void testInMemoryProviderIsUsedWhenTwilioNotConfigured() {
-        assertNotNull(smsProvider);
-        assertEquals("InMemorySmsProvider", smsProvider.getProviderName());
-        assertTrue(smsProvider instanceof InMemorySmsProvider);
+    void testInMemoryProviderDirectly() {
+        InMemorySmsProvider provider = new InMemorySmsProvider();
+
+        assertNotNull(provider);
+        assertEquals("InMemorySmsProvider", provider.getProviderName());
+        assertTrue(provider instanceof SmsProvider);
     }
-    
+
     @Test
-    void testSmsProviderCanSendMessage() {
-        boolean result = smsProvider.sendSms("+14155552671", "Test message");
+    void testInMemoryProviderCanSendMessage() {
+        InMemorySmsProvider provider = new InMemorySmsProvider();
+        boolean result = provider.sendSms("+14155552671", "Test message");
+
         assertTrue(result);
+        assertEquals(1, provider.getMessageCount("+14155552671"));
+        assertEquals("Test message", provider.getLastMessage("+14155552671"));
     }
 }

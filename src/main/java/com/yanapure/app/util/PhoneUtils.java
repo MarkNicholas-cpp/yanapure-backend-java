@@ -24,4 +24,14 @@ public final class PhoneUtils {
     public static void validatePhone(String raw) {
         normalizeToE164(raw);
     }
+
+    /**
+     * Mask phone number for logging (e.g., +14155552671 -> +1*******71)
+     */
+    public static String maskPhone(String phone) {
+        if (phone == null || phone.length() < 4) {
+            return "***";
+        }
+        return phone.substring(0, 2) + "*".repeat(phone.length() - 4) + phone.substring(phone.length() - 2);
+    }
 }
