@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class StartupLogger {
-    private static final Logger log = LoggerFactory.getLogger(StartupLogger.class);
+  private static final Logger log = LoggerFactory.getLogger(StartupLogger.class);
 
-    @EventListener(ApplicationStartedEvent.class)
-    public void onStart() {
-        log.info("Yana Backend started. Logs at logs/app.log (secrets masked).");
-    }
+  @EventListener(ApplicationStartedEvent.class)
+  public void onStart() {
+    log.info("Yana Backend started. Logs at logs/app.log (secrets masked).");
+  }
 }
