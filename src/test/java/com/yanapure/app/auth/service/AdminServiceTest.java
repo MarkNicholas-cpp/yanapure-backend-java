@@ -44,9 +44,18 @@ class AdminServiceTest {
     String name = "New Admin";
     String email = "newadmin@example.com";
 
+    User expectedAdmin = new User();
+    expectedAdmin.setId(UUID.randomUUID());
+    expectedAdmin.setName(name);
+    expectedAdmin.setPhone(phone);
+    expectedAdmin.setEmail(email);
+    expectedAdmin.setRole(Role.ADMIN);
+    expectedAdmin.setCreatedAt(Instant.now());
+    expectedAdmin.setUpdatedAt(Instant.now());
+
     when(userRepository.existsByPhone(anyString())).thenReturn(false);
     when(userRepository.existsByEmail(anyString())).thenReturn(false);
-    when(userRepository.save(any(User.class))).thenReturn(testAdmin);
+    when(userRepository.save(any(User.class))).thenReturn(expectedAdmin);
 
     // When
     User result = adminService.createAdminUser(phone, name, email);
